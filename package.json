@@ -1,0 +1,22 @@
+{
+	"name": "express-mongo-test",
+	"version": "1.0.0",
+	"description": "Skipta-POS-Backend",
+	"main": "server.js",
+	"scripts": {
+		"start": "node backend/server.js",
+		"server": "nodemon backend/server.js"
+	},
+	"author": "Oak Soe Htoo Aung",
+	"license": "MIT",
+	"dependencies": {
+		"colors": "^1.4.0",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"mongodb": "^6.7.0",
+		"mongoose": "^8.4.0"
+	},
+	"devDependencies": {
+		"nodemon": "^3.0.2"
+	}
+}
