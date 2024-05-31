@@ -14,12 +14,19 @@ const getOrders = async (req, res, next) => {
 // POST
 const setOrder = async (req, res, next) => {
 	try {
-		if (!req.body.text) {
+		if (!req.body) {
 			res.status(400).json({ message: "There is no input" });
 			return;
 		}
 
-		const order = await Order.create({ text: req.body.text });
+		const order = await Order.create({
+			customerName: req.body.customerName,
+			menuName: req.body.menuName,
+			vege: req.body.vege,
+			soup: req.body.soup,
+			orderCompleted: req.body.orderCompleted,
+		});
+
 		res.status(200).json({ message: "New Order Created", data: order });
 	} catch (error) {
 		next(error);
@@ -36,10 +43,10 @@ const updateOrder = async (req, res, next) => {
 			return;
 		}
 
-		const updateOptions = { new: true }; // Ensure updated document is returned
+		const updateOptions = { new: false }; // Ensure updated document is returned
 		const order = await Order.findByIdAndUpdate(
 			req.params.id,
-			{ text: req.body.text },
+			{ orderCompleted: req.body.orderCompleted },
 			updateOptions
 		);
 
