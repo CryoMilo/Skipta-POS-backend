@@ -1,11 +1,11 @@
 {
-	"name": "express-mongo-test",
+	"name": "skipta-pos-backend",
 	"version": "1.0.0",
 	"description": "Skipta-POS-Backend",
 	"main": "server.js",
 	"scripts": {
-		"start": "node backend/server.js",
-		"server": "nodemon backend/server.js"
+		"start": "node server.js",
+		"server": "nodemon server.js"
 	},
 	"author": "Oak Soe Htoo Aung",
 	"license": "MIT",
