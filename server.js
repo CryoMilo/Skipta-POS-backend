@@ -46,6 +46,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api/order", require("./routes/orderRoutes"));
+app.use("/api/register", require("./routes/userRoutes"));
 app.use(errorHandler);
 
 server.listen(port, () => console.log(`Server started on port ${port}`));
