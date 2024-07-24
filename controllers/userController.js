@@ -1,4 +1,5 @@
 const User = require("../model/userModel");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res, next) => {
 	try {
@@ -18,15 +19,19 @@ const createUser = async (req, res, next) => {
 		}
 
 		// Check if the email is already registered
-		const existingUser = await User.findOne({ email });
+		const existingUser = await User.findOne({ email: req.body.email });
 		if (existingUser) {
 			return res.status(400).json({ error: "Email already registered" });
 		}
 
+		const salt = await bcrypt.genSalt(10);
+		const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
 		const user = await User.create({
-			name: req.body.name,
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
 			email: req.body.email,
-			password: req.body.password,
+			password: hashedPassword,
 			role: req.body.role,
 		});
 
