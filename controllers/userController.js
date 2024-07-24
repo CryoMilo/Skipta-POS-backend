@@ -11,6 +11,42 @@ const getUsers = async (req, res, next) => {
 	}
 };
 
+const loginUser = async (req, res, next) => {
+	try {
+		const { email, password } = req.body;
+
+		if (!email || !password) {
+			return res.status(400).json({ error: "Email and password are required" });
+		}
+
+		// Check if the user exists
+		const user = await User.findOne({ email });
+		if (!user) {
+			return res.status(400).json({ error: "Invalid email or password" });
+		}
+
+		// Compare the provided password with the stored hashed password
+		const isMatch = await bcrypt.compare(password, user.password);
+		if (!isMatch) {
+			return res.status(400).json({ error: "Invalid email or password" });
+		}
+
+		// Respond with success message and user data (excluding password)
+		res.status(200).json({
+			message: "Login successful",
+			user: {
+				_id: user._id,
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+				role: user.role,
+			},
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 const createUser = async (req, res, next) => {
 	try {
 		if (!req.body) {
@@ -41,4 +77,4 @@ const createUser = async (req, res, next) => {
 	}
 };
 
-module.exports = { createUser, getUsers };
+module.exports = { createUser, getUsers, loginUser };
