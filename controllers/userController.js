@@ -1,5 +1,6 @@
 const User = require("../model/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const getUsers = async (req, res, next) => {
 	try {
@@ -7,7 +8,6 @@ const getUsers = async (req, res, next) => {
 		res.status(200).json(users);
 	} catch (error) {
 		next(error);
-		// Pass the Error into errorMiddleware
 	}
 };
 
@@ -31,6 +31,11 @@ const loginUser = async (req, res, next) => {
 			return res.status(400).json({ error: "Invalid email or password" });
 		}
 
+		const payload = { id: user._id, firstName: user.firstName };
+		const secretKey = process.env.SECRET_KEY;
+		const expiration = "1h";
+		const token = jwt.sign(payload, secretKey, { expiresIn: expiration });
+
 		// Respond with success message and user data (excluding password)
 		res.status(200).json({
 			message: "Login successful",
@@ -40,6 +45,7 @@ const loginUser = async (req, res, next) => {
 				lastName: user.lastName,
 				email: user.email,
 				role: user.role,
+				token: token,
 			},
 		});
 	} catch (error) {

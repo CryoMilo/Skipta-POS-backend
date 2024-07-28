@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const http = require("http");
 const cors = require("cors");
 const socketIo = require("socket.io");
+const authenticateJWT = require("./middleware/authenticatejwt");
 
 const app = express();
 
