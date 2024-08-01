@@ -6,13 +6,17 @@ const http = require("http");
 const cors = require("cors");
 const socketIo = require("socket.io");
 const authenticateJWT = require("./middleware/authenticatejwt");
+const cookieParser = require("cookie-parser");
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(
 	cors({
 		origin: process.env.FRONTEND_ORIGIN, // Front-end origin
 		methods: ["GET", "POST", "PUT", "DELETE"],
+		credentials: true,
 	})
 );
 
@@ -46,7 +50,7 @@ connectDB();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use("/api/order", require("./routes/orderRoutes"));
+app.use("/api/order", authenticateJWT, require("./routes/orderRoutes"));
 app.use("/api/user", require("./routes/userRoutes"));
 app.use(errorHandler);
 

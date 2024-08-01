@@ -36,6 +36,13 @@ const loginUser = async (req, res, next) => {
 		const expiration = "1h";
 		const token = jwt.sign(payload, secretKey, { expiresIn: expiration });
 
+		res.cookie("token", token, {
+			httpOnly: false,
+			secure: false, // Set to true if using HTTPS
+			sameSite: "Lax", // Helps prevent CSRF attacks
+			maxAge: 3600000, // 1 hour in milliseconds
+		});
+
 		// Respond with success message and user data (excluding password)
 		res.status(200).json({
 			message: "Login successful",
@@ -45,7 +52,6 @@ const loginUser = async (req, res, next) => {
 				lastName: user.lastName,
 				email: user.email,
 				role: user.role,
-				token: token,
 			},
 		});
 	} catch (error) {
@@ -83,4 +89,16 @@ const createUser = async (req, res, next) => {
 	}
 };
 
-module.exports = { createUser, getUsers, loginUser };
+const logoutUser = async (req, res, next) => {
+	res.cookie("token", "", {
+		httpOnly: false,
+		secure: false,
+		sameSite: "Lax", // or 'None' if cross-site and secure
+		expires: new Date(0), // Set the cookie to expire in the past
+	});
+
+	// Optionally, send a success message or redirect the user
+	res.status(200).json({ message: "Logged out successfully" });
+};
+
+module.exports = { createUser, getUsers, loginUser, logoutUser };
