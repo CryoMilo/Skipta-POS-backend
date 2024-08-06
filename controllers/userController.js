@@ -54,6 +54,17 @@ const loginUser = async (req, res, next) => {
 				role: user.role,
 			},
 		});
+
+		// res.send({
+		// 	message: "Login successful",
+		// 	user: {
+		// 		_id: user._id,
+		// 		firstName: user.firstName,
+		// 		lastName: user.lastName,
+		// 		email: user.email,
+		// 		role: user.role,
+		// 	},
+		// });
 	} catch (error) {
 		next(error);
 	}
