@@ -53,6 +53,7 @@ app.use(express.json());
 // app.use("/api/order", authenticateJWT, require("./routes/orderRoutes"));
 app.use("/api/order", require("./routes/orderRoutes"));
 app.use("/api/user", require("./routes/userRoutes"));
+app.use("/api/product", require("./routes/productRoutes"));
 app.use(errorHandler);
 
 server.listen(port, () => console.log(`Server started on port ${port}`));
