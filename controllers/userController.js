@@ -44,18 +44,7 @@ const loginUser = async (req, res, next) => {
 		});
 
 		// Respond with success message and user data (excluding password)
-		res.status(200).json({
-			message: "Login successful",
-			user: {
-				_id: user._id,
-				firstName: user.firstName,
-				lastName: user.lastName,
-				email: user.email,
-				role: user.role,
-			},
-		});
-
-		// res.send({
+		// res.status(200).json({
 		// 	message: "Login successful",
 		// 	user: {
 		// 		_id: user._id,
@@ -65,6 +54,17 @@ const loginUser = async (req, res, next) => {
 		// 		role: user.role,
 		// 	},
 		// });
+
+		res.send({
+			message: "Login successful",
+			user: {
+				_id: user._id,
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+				role: user.role,
+			},
+		});
 	} catch (error) {
 		next(error);
 	}
