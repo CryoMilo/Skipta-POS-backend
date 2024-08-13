@@ -7,6 +7,11 @@ const cors = require("cors");
 // const socketIo = require("socket.io");
 const authenticateJWT = require("./middleware/authenticatejwt");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+
+// Setup multer storage
+const storage = multer.memoryStorage(); // or use diskStorage if you prefer to save to disk
+const upload = multer({ storage });
 
 const app = express();
 
@@ -47,7 +52,8 @@ const port = process.env.PORT || 5000;
 
 connectDB();
 
-app.use(express.urlencoded({ extended: false }));
+app.use(upload.any());
+// app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // app.use("/api/order", authenticateJWT, require("./routes/orderRoutes"));

@@ -6,14 +6,20 @@ const productSchema = mongoose.Schema(
 			type: String,
 			require: [true, "This field is required"],
 		},
-		contains: {
+		description: {
 			type: String,
+		},
+		price: {
+			type: Number,
 			require: [true, "This field is required"],
 		},
 		vege: {
 			type: Boolean,
 		},
-		image: {},
+		// image: {
+		// 	type: Buffer,
+		// 	require: [true, "Image is required"],
+		// },
 	},
 	{ timestamps: true }
 );
