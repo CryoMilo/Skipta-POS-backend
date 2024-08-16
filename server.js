@@ -52,8 +52,6 @@ const port = process.env.PORT || 5000;
 
 connectDB();
 
-app.use(upload.any());
-
 //Bottom two are for using with x-www-url-encoded
 // app.use(express.urlencoded({ extended: false }));
 // app.use(express.json());
@@ -61,9 +59,10 @@ app.use(upload.any());
 // app.use("/api/order", authenticateJWT, require("./routes/orderRoutes"));
 app.use("/api/order", require("./routes/orderRoutes"));
 app.use("/api/user", require("./routes/userRoutes"));
+app.use("/api/test", upload.single("image"), require("./routes/testRoutes"));
 app.use(
 	"/api/product",
-	// upload.single("image"),
+	upload.single("image"),
 	require("./routes/productRoutes")
 );
 app.use(errorHandler);

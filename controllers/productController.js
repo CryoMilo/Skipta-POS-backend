@@ -1,5 +1,4 @@
 const Product = require("../model/productModel");
-const multer = require("multer");
 
 // GET
 const getProducts = async (req, res, next) => {
@@ -20,21 +19,13 @@ const setProduct = async (req, res, next) => {
 			return;
 		}
 
-		// Handling the image upload
-		// let image;
-		// if (req.file) {
-		// 	image = {
-		// 		data: req.file.buffer,
-		// 		contentType: req.file.mimetype,
-		// 	};
-		// }
-
 		const product = await Product.create({
 			productName: req.body.productName,
 			description: req.body.description,
 			vege: req.body.vege,
 			price: req.body.price,
-			// image: image,
+			image: req.file.buffer, // Store the image as a Buffer
+			contentType: req.file.mimetype, // Store the MIME type
 		});
 
 		res.status(200).json({ message: "New Product Created", data: product });
@@ -87,4 +78,9 @@ const deleteProduct = async (req, res, next) => {
 	}
 };
 
-module.exports = { getProducts, setProduct, updateProduct, deleteProduct };
+module.exports = {
+	getProducts,
+	setProduct,
+	updateProduct,
+	deleteProduct,
+};

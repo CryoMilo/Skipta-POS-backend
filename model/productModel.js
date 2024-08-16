@@ -18,7 +18,9 @@ const productSchema = mongoose.Schema(
 		},
 		image: {
 			type: Buffer,
-			require: [true, "Image is required"],
+		},
+		contentType: {
+			type: String, // Store the content type (e.g., 'image/jpeg')
 		},
 	},
 	{ timestamps: true }
