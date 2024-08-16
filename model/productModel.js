@@ -16,10 +16,10 @@ const productSchema = mongoose.Schema(
 		vege: {
 			type: Boolean,
 		},
-		// image: {
-		// 	type: Buffer,
-		// 	require: [true, "Image is required"],
-		// },
+		image: {
+			type: Buffer,
+			require: [true, "Image is required"],
+		},
 	},
 	{ timestamps: true }
 );

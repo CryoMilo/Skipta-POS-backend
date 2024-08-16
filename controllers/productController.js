@@ -20,11 +20,21 @@ const setProduct = async (req, res, next) => {
 			return;
 		}
 
+		// Handling the image upload
+		// let image;
+		// if (req.file) {
+		// 	image = {
+		// 		data: req.file.buffer,
+		// 		contentType: req.file.mimetype,
+		// 	};
+		// }
+
 		const product = await Product.create({
 			productName: req.body.productName,
 			description: req.body.description,
 			vege: req.body.vege,
 			price: req.body.price,
+			// image: image,
 		});
 
 		res.status(200).json({ message: "New Product Created", data: product });
