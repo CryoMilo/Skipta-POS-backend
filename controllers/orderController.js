@@ -11,6 +11,22 @@ const getOrders = async (req, res, next) => {
 	}
 };
 
+// Get By Id
+const getOrderById = async (req, res, next) => {
+	try {
+		const requiredDocument = await Order.findById(req.params.id);
+
+		if (!requiredDocument) {
+			res.status(404).json({ message: "Data Not Found!" });
+			return;
+		}
+
+		res.status(200).json(requiredDocument);
+	} catch (error) {
+		next(error);
+	}
+};
+
 // POST
 const setOrder = async (req, res, next) => {
 	try {
@@ -72,4 +88,10 @@ const deleteOrder = async (req, res, next) => {
 	}
 };
 
-module.exports = { getOrders, setOrder, updateOrder, deleteOrder };
+module.exports = {
+	getOrders,
+	setOrder,
+	updateOrder,
+	deleteOrder,
+	getOrderById,
+};

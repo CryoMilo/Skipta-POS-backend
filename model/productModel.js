@@ -13,8 +13,11 @@ const productSchema = mongoose.Schema(
 			type: Number,
 			require: [true, "This field is required"],
 		},
-		vege: {
-			type: Boolean,
+		ingredients: {
+			type: String,
+		},
+		taste: {
+			type: String,
 		},
 		image: {
 			type: Buffer,

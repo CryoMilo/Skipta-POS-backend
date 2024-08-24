@@ -11,6 +11,22 @@ const getProducts = async (req, res, next) => {
 	}
 };
 
+// Get Product By Id
+const getProductById = async (req, res, next) => {
+	try {
+		const requiredDocument = await Product.findById(req.params.id);
+
+		if (!requiredDocument) {
+			res.status(404).json({ message: "Data Not Found!" });
+			return;
+		}
+
+		res.status(200).json(requiredDocument);
+	} catch (error) {
+		next(error);
+	}
+};
+
 // POST
 const setProduct = async (req, res, next) => {
 	try {
@@ -22,8 +38,9 @@ const setProduct = async (req, res, next) => {
 		const product = await Product.create({
 			productName: req.body.productName,
 			description: req.body.description,
-			vege: req.body.vege,
 			price: req.body.price,
+			ingredients: req.body.ingredients,
+			taste: req.body.ingredients,
 			image: req.file.buffer, // Store the image as a Buffer
 			contentType: req.file.mimetype, // Store the MIME type
 		});
@@ -50,8 +67,9 @@ const updateProduct = async (req, res, next) => {
 			{
 				productName: req.body.productName,
 				description: req.body.description,
-				vege: req.body.vege,
 				price: req.body.price,
+				ingredients: req.body.ingredients,
+				taste: req.body.ingredients,
 			},
 			updateOptions
 		);
@@ -82,5 +100,6 @@ module.exports = {
 	getProducts,
 	setProduct,
 	updateProduct,
+	getProductById,
 	deleteProduct,
 };
