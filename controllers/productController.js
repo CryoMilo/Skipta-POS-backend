@@ -30,24 +30,32 @@ const getProductById = async (req, res, next) => {
 // POST
 const setProduct = async (req, res, next) => {
 	try {
+		// Basic input validation to check if req.body is present
 		if (!req.body) {
-			res.status(400).json({ message: "There is no input" });
-			return;
+			return res.status(400).json({ message: "There is no input" });
 		}
 
+		// Destructuring the necessary fields from req.body
+		const { productName, description, price, ingredients, taste, image } =
+			req.body;
+
+		// Create the product in the database
 		const product = await Product.create({
-			productName: req.body.productName,
-			description: req.body.description,
-			price: req.body.price,
-			ingredients: req.body.ingredients,
-			taste: req.body.ingredients,
-			image: req.file.buffer, // Store the image as a Buffer
-			contentType: req.file.mimetype, // Store the MIME type
+			productName,
+			description,
+			price,
+			ingredients,
+			taste,
+			image, // Base64 encoded image
 		});
 
-		res.status(200).json({ message: "New Product Created", data: product });
+		// Send the response back with a success message and the created product data
+		return res
+			.status(200)
+			.json({ message: "New Product Created", data: product });
 	} catch (error) {
-		next(error);
+		// Pass the error to the next middleware (global error handler)
+		return next(error);
 	}
 };
 

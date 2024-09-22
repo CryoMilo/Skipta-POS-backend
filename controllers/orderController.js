@@ -37,7 +37,7 @@ const setOrder = async (req, res, next) => {
 
 		const order = await Order.create({
 			customerName: req.body.customerName,
-			menuName: req.body.menuName,
+			productName: req.body.productName,
 			vege: req.body.vege,
 			soup: req.body.soup,
 			orderCompleted: req.body.orderCompleted,

@@ -4,26 +4,27 @@ const productSchema = mongoose.Schema(
 	{
 		productName: {
 			type: String,
-			require: [true, "This field is required"],
+			required: true,
 		},
 		description: {
 			type: String,
+			required: true,
 		},
 		price: {
 			type: Number,
-			require: [true, "This field is required"],
+			required: true,
 		},
 		ingredients: {
-			type: String,
+			type: Array, // Array of ingredients
+			required: true,
 		},
 		taste: {
 			type: String,
+			required: true,
 		},
 		image: {
-			type: Buffer,
-		},
-		contentType: {
-			type: String, // Store the content type (e.g., 'image/jpeg')
+			type: String, // Base64-encoded image string
+			required: false, // Not always necessary
 		},
 	},
 	{ timestamps: true }

@@ -27,6 +27,8 @@ app.use(
 
 const server = http.createServer(app);
 
+app.use(express.json({ limit: "10mb" }));
+
 // const io = socketIo(server, {
 // 	cors: {
 // 		origin: process.env.FRONTEND_ORIGIN, // Front-end origin

@@ -6,7 +6,7 @@ const orderSchema = mongoose.Schema(
 			type: String,
 			require: [true, "This field is required"],
 		},
-		menuName: {
+		productName: {
 			type: String,
 			require: [true, "This field is required"],
 		},
