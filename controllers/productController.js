@@ -69,15 +69,19 @@ const updateProduct = async (req, res, next) => {
 			return;
 		}
 
-		const updateOptions = { new: false }; // Ensure updated document is returned
+		const { productName, description, price, ingredients, taste, image } =
+			req.body;
+
+		const updateOptions = { new: false };
 		const product = await Product.findByIdAndUpdate(
 			req.params.id,
 			{
-				productName: req.body.productName,
-				description: req.body.description,
-				price: req.body.price,
-				ingredients: req.body.ingredients,
-				taste: req.body.ingredients,
+				productName,
+				description,
+				price,
+				ingredients,
+				taste,
+				image,
 			},
 			updateOptions
 		);
