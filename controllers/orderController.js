@@ -39,7 +39,7 @@ const setOrder = async (req, res, next) => {
 			customerName: req.body.customerName,
 			productName: req.body.productName,
 			vege: req.body.vege,
-			soup: req.body.soup,
+			products: req.body.products,
 			orderCompleted: req.body.orderCompleted,
 		});
 

@@ -26,6 +26,9 @@ const productSchema = mongoose.Schema(
 			type: String, // Base64-encoded image string
 			required: false, // Not always necessary
 		},
+		vegan: {
+			type: Boolean,
+		},
 	},
 	{ timestamps: true }
 );
