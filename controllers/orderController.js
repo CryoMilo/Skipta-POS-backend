@@ -59,7 +59,7 @@ const updateOrder = async (req, res, next) => {
 			return;
 		}
 
-		const updateOptions = { new: false }; // Ensure updated document is returned
+		const updateOptions = { new: false };
 		const order = await Order.findByIdAndUpdate(
 			req.params.id,
 			{ orderCompleted: req.body.orderCompleted },

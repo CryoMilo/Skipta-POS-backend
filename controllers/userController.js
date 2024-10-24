@@ -19,13 +19,11 @@ const loginUser = async (req, res, next) => {
 			return res.status(400).json({ error: "Email and password are required" });
 		}
 
-		// Check if the user exists
 		const user = await User.findOne({ email });
 		if (!user) {
 			return res.status(400).json({ error: "Invalid email or password" });
 		}
 
-		// Compare the provided password with the stored hashed password
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
 			return res.status(400).json({ error: "Invalid email or password" });
@@ -37,23 +35,11 @@ const loginUser = async (req, res, next) => {
 		const token = jwt.sign(payload, secretKey, { expiresIn: expiration });
 
 		res.cookie("token", token, {
-			httpOnly: false,
-			secure: false, // Set to true if using HTTPS
-			sameSite: "Lax", // Helps prevent CSRF attacks
-			maxAge: 3600000, // 1 hour in milliseconds
+			httpOnly: true,
+			secure: false,
+			sameSite: "Lax",
+			maxAge: 3600000,
 		});
-
-		// Respond with success message and user data (excluding password)
-		// res.status(200).json({
-		// 	message: "Login successful",
-		// 	user: {
-		// 		_id: user._id,
-		// 		firstName: user.firstName,
-		// 		lastName: user.lastName,
-		// 		email: user.email,
-		// 		role: user.role,
-		// 	},
-		// });
 
 		res.send({
 			message: "Login successful",
@@ -63,6 +49,7 @@ const loginUser = async (req, res, next) => {
 				lastName: user.lastName,
 				email: user.email,
 				role: user.role,
+				token: token,
 			},
 		});
 	} catch (error) {
@@ -77,7 +64,6 @@ const createUser = async (req, res, next) => {
 			return;
 		}
 
-		// Check if the email is already registered
 		const existingUser = await User.findOne({ email: req.body.email });
 		if (existingUser) {
 			return res.status(400).json({ error: "Email already registered" });
@@ -104,11 +90,10 @@ const logoutUser = async (req, res, next) => {
 	res.cookie("token", "", {
 		httpOnly: false,
 		secure: false,
-		sameSite: "Lax", // or 'None' if cross-site and secure
-		expires: new Date(0), // Set the cookie to expire in the past
+		sameSite: "Lax",
+		expires: new Date(0),
 	});
 
-	// Optionally, send a success message or redirect the user
 	res.status(200).json({ message: "Logged out successfully" });
 };
 
